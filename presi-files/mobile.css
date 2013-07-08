@@ -1,0 +1,36 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	background: #b3b3b3;
+}
+body {
+	width: 100%;
+	background: url('background.png');
+}
+#left {
+	float: left;
+	width: 10%;
+	height: 84%;
+}
+#slide {
+	width: 80%;
+	height: 84%;
+	float:left;
+}
+#right {
+	width: 10%;
+	height: 100%-30px;
+	float: right;
+}
+#bottombar {
+	position: fixed;
+	bottom: 0px;
+	height: 30px;
+	width: 100%;
+	text-align: center;
+}
+.button{
+	display: inline;
+}
+.step {display: none;}
+.note {display: block; color: red;}

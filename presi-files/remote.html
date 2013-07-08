@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>impress.js-Remote | remote presentation framework</title>
+    <meta name="description" content="impress.js remote tutorial" />
+    <meta name="author" content="Cedric Kleinjung" />
+    <link rel="shortcut icon" href="favicon.png" />
+    <link href="mobile.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+
+    <div id="left">
+        <div onClick="prev()" class="button">
+            <img src="left.png" class="picture-button"/>
+        </div>
+    </div>
+
+    <div id="slide">
+        Start the presentation to see your notes ;)
+    </div>
+
+    <div id="right">
+        <div onClick="next()" class="button" >
+            <img src="right.png" class="picture-button" />
+        </div>
+    </div>
+
+    <div id="bottombar">
+        <div class="button" onClick="">
+            <input type="number" size="4" value="1" onChange="jump(this);" class="picture-button" id="jump" />
+        </div>
+        <div class="button" onClick="init()" >
+            <img src="play.png" class="picture-button" />
+        </div>
+        <div class="button reload" onClick="reload()">
+            Reload(site)
+        </div>
+    </div> 
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// get the IP of the serverIP @ lan, if possible (Linux Server should work fine)
+    function getIP() {
+        var xmlhttp = null;
+        var serverIP;
+        // Mozilla
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        // IE
+        else if (window.ActiveXObject) {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function(){
+            serverIP = this.responseText;
+        }
+        xmlhttp.open("GET", 'getIP', true);
+        xmlhttp.send(null);
+        return serverIP;
+    }
+    // connect to the server :)
+    var socket = io.connect('http://'+getIP());
+    // functions functions functions, simply to emit "events"
+    var prev = function(){
+        socket.emit('control', 'prev');
+    }
+    // dito
+    var next = function(){ 
+        socket.emit('control', 'next'); 
+    }
+    // jump to a chosen slide
+    var jump = function(){
+        socket.emit('control', 'jump '+ document.getElementById("jump").value );
+    }
+    // this is the "start the magic shit button" (:
+    var init = function(){
+        socket.emit('control', 'init');
+    }
+    // for debug the presentation (prrogramming or creating sliedes)...
+    var reload = function(){
+        socket.emit('control', 'reload');
+        document.getElementById("jump").value = "1";
+    }   
+    // get the document notes back, it's a bit confusing but, better to recive the notes always, 'cause you must edit one file
+    socket.on('slide', function(data){
+        document.getElementById('slide').innerHTML = data;
+        try{
+            document.getElementById('slide').innerHTML = document.getElementsByClassName('note')[0].innerHTML;
+        }
+        catch(e){
+            console.warn("No notes defined in step.");
+        }
+    });
+});
+</script>
+</body>
+</html>

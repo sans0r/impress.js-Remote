@@ -1,0 +1,23 @@
+{
+  "name": "impress.js-Remote",
+  "version": "0.0.1",
+  "description": "Workaround for impress.js to remotecontrol the presentation with your Smartphone, or Tablet...",
+  "keywords": [
+    "impress.js",
+    "presentation",
+    "smartphone",
+    "tablet"
+  ],
+  "author": {
+    "name": "Cedric Kleinjung",
+    "email": "cedric@kleinjung.tk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sans0r/impress.js-Remote.git"
+  },
+  "dependencies": {
+    "socket.io-client": "*"
+  },
+  "readmeFilename": "Readme.md"
+}
