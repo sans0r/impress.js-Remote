@@ -13,27 +13,22 @@ function serveStaticIndex(req, res) {
   switch(req.url){
     case "/":
       var fileStream = fs.createReadStream(__dirname + '/presi-files' + '/index.html');
-      res.writeHead(200);
-      fileStream.pipe(res);
-      break;
-    case "/remote":
-      var fileStream = fs.createReadStream(__dirname + '/presi-files' + '/remote.html');
-      res.writeHead(200);
-      fileStream.pipe(res);
-      break;
-    case "/impress.js":
-      var fileStream = fs.createReadStream(__dirname + '/files' + '/impress.js');
-      res.writeHead(200);
+      res.writeHead(200, {'Content-Type': 'text/html'});
       fileStream.pipe(res);
       break;
     case "/style.css":
       var fileStream = fs.createReadStream(__dirname + '/presi-files' + '/style.css');
-      res.writeHead(200);
+      res.writeHead(200, {'Content-Type': 'text/css'});
+      fileStream.pipe(res);
+      break;
+    case "/remote":
+      var fileStream = fs.createReadStream(__dirname + '/presi-files' + '/remote.html');
+      res.writeHead(200, {'Content-Type': 'text/html'});
       fileStream.pipe(res);
       break;
     case "/mobile.css":
       var fileStream = fs.createReadStream(__dirname + '/presi-files' + '/mobile.css');
-      res.writeHead(200);
+      res.writeHead(200, {'Content-Type': 'text/css'});
       fileStream.pipe(res);
       break;
     case "/left.png":
@@ -51,9 +46,19 @@ function serveStaticIndex(req, res) {
       res.writeHead(200);
       fileStream.pipe(res);
       break;
-    case "/background.png":
-      var fileStream = fs.createReadStream(__dirname + '/files' + '/background.png');
-      res.writeHead(200);
+    case "/impress.js":
+      var fileStream = fs.createReadStream(__dirname + '/files' + '/impress.js');
+      res.writeHead(200, {'Content-Type': 'text/javascript'});
+      fileStream.pipe(res);
+      break;
+    case "/remote.js":
+      var fileStream = fs.createReadStream(__dirname + '/files' + '/remote.js');
+      res.writeHead(200, {'Content-Type': 'text/javascript'});
+      fileStream.pipe(res);
+      break;
+    case "/presentation.js":
+      var fileStream = fs.createReadStream(__dirname + '/files' + '/presentation.js');
+      res.writeHead(200, {'Content-Type': 'text/javascript'});
       fileStream.pipe(res);
       break;
     case "/getIP":
@@ -61,10 +66,11 @@ function serveStaticIndex(req, res) {
       res.end(getlocalIP());
       break;
     default: 
-    res.writeHead(404);
-    res.end("Not found: "+req.url);
+      res.writeHead(404);
+      res.end("Not found: "+req.url);
     };
 };
+
  
 // Get local IP
 function getlocalIP(){

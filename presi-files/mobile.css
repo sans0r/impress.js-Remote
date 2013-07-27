@@ -5,7 +5,6 @@
 }
 body {
 	width: 100%;
-	background: url('background.png');
 }
 #left {
 	float: left;
@@ -19,7 +18,10 @@ body {
 }
 #right {
 	width: 10%;
-	height: 100%-30px;
+	height: 100%;
+	float: right;
+}
+#right .button{
 	float: right;
 }
 #bottombar {
@@ -32,5 +34,3 @@ body {
 .button{
 	display: inline;
 }
-.step {display: none;}
-.note {display: block; color: red;}
